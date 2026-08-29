@@ -1,0 +1,14 @@
+{
+  "name": "IG Story Media Inspector",
+  "short_name": "IG Inspector",
+  "description": "Inspect Instagram Story/Highlight media already delivered to your authorized browser session.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#080b12",
+  "theme_color": "#101622",
+  "icons": [
+    {"src":"assets/icon-192.png","sizes":"192x192","type":"image/png","purpose":"any maskable"},
+    {"src":"assets/icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}
+  ]
+}
