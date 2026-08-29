@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#101622">
+  <meta name="description" content="A privacy-respecting Instagram Story/Highlight media inspector that works with media already available to your logged-in browser session.">
+  <title>IG Story Media Inspector</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/icon-192.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="wrap">
+    <section class="hero">
+      <div class="brand"><div class="logo">IG</div><div><div class="eyebrow">GitHub Pages Ready</div><div class="pill">No backend • No password collection</div></div></div>
+      <h1>IG Story Media Inspector</h1>
+      <p class="lead">Paste a Story or Highlight link, open it in your own Instagram session, then scan the media that Instagram actually delivered to the browser — images, videos, posters, CDN resources, embedded JSON, and live API responses.</p>
+      <div class="badgebar"><span class="badge">Public accounts</span><span class="badge">Private accounts you can already view</span><span class="badge">Android friendly</span><span class="badge">Original-image candidate ranking</span></div>
+    </section>
+
+    <section class="grid">
+      <div class="card">
+        <h2>1. Open your Story / Highlight</h2>
+        <p>For a private account, first sign in on the official <b>instagram.com</b> website using the account that already has permission to view it.</p>
+        <label class="label" for="storyUrl">Instagram Story / Highlight URL</label>
+        <input id="storyUrl" class="input" inputmode="url" autocomplete="off" placeholder="https://www.instagram.com/stories/... or /s/...">
+        <div class="row">
+          <button id="openStory" class="btn primary">Open Story on Instagram</button>
+          <button id="openLogin" class="btn">Instagram Login</button>
+          <button id="copyStory" class="btn">Copy Link</button>
+        </div>
+        <div id="urlStatus" class="status"></div>
+        <div class="note ok"><b>Private account support:</b> the tool does not bypass privacy. It works only when your own logged-in Instagram browser session is already authorized to view that Story/Highlight.</div>
+      </div>
+
+      <div class="card">
+        <h2>2. Install the one-tap Inspector</h2>
+        <p>You only do this setup once per browser. The bookmark runs directly on the Instagram page, where your login session already exists.</p>
+        <div class="code" id="bookmarkletPreview">Loading inspector…</div>
+        <div class="row">
+          <button id="copyBookmarklet" class="btn primary">Copy Inspector Bookmark</button>
+          <a id="bookmarkletLink" class="btn good" href="#">IG Media Inspector</a>
+        </div>
+        <div id="bookmarkStatus" class="status"></div>
+        <div class="note warn"><b>Android note:</b> create/edit a bookmark named <b>IG Media Inspector</b> and paste the copied code into its URL field. Some browsers strip <code>javascript:</code>; type <code>java</code> manually first if needed, then paste the rest.</div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>3. Normal-user workflow</h2>
+      <div class="steps">
+        <div class="step"><div class="num">1</div><div><b>Login once</b><span>Use the <b>Instagram Login</b> button above. Your password stays on instagram.com; this website never receives it.</span></div></div>
+        <div class="step"><div class="num">2</div><div><b>Paste link → Open Story</b><span>Public or private is fine as long as your account can already view it.</span></div></div>
+        <div class="step"><div class="num">3</div><div><b>Run the bookmark</b><span>While the target Story is visible, open your browser address bar, type <b>IG Media Inspector</b>, and tap that bookmark.</span></div></div>
+        <div class="step"><div class="num">4</div><div><b>Check “Likely Original / Background” first</b><span>The inspector ranks large portrait images, target-response images, video posters and Instagram CDN images ahead of tiny icons/assets.</span></div></div>
+        <div class="step"><div class="num">5</div><div><b>If nothing appears, capture one navigation</b><span>Keep the inspector panel open, move to the previous/next Story and return to the target. The live fetch/XHR capture can then inspect newly delivered Instagram API data.</span></div></div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="card">
+        <h2>What it checks automatically</h2>
+        <div class="featuregrid">
+          <div class="feature"><b>Visible images & video</b><span>DOM images, srcset, videos, video posters and source elements.</span></div>
+          <div class="feature"><b>Network resources</b><span>Performance entries and live resource requests from Instagram/CDN hosts.</span></div>
+          <div class="feature"><b>Embedded metadata</b><span>Media URLs inside page scripts, JSON and HTML, including escaped CDN links.</span></div>
+          <div class="feature"><b>Live API responses</b><span>Future Fetch/XHR JSON responses are scanned for image/video URLs while the panel is open.</span></div>
+          <div class="feature"><b>Target Story matching</b><span>Story media IDs found in shared URLs are used to boost candidates discovered near matching data.</span></div>
+          <div class="feature"><b>Preview & export</b><span>Open, copy or download candidates and export a JSON report.</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Important limitation</h2>
+        <p>If Instagram sends the clean uploaded photo separately, this tool can surface it. If Instagram sends only one already-composited image/video with the sticker, reaction or overlay baked in, the hidden original pixels are not present in the browser response.</p>
+        <div class="note"><b>This tool does not use AI to invent hidden faces.</b> A “clean” result is only treated as real when it exists as an actual media resource delivered by Instagram to your authorized session.</div>
+        <div class="divider"></div>
+        <p class="tiny">GitHub Pages is a different web origin from Instagram, so a static site cannot safely read private Instagram responses or cookies directly. That is why the inspector runs on the official Instagram page instead of asking for your password.</p>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Install as an app (optional)</h2>
+      <p>This site is a PWA. On supported Android browsers, choose <b>Add to Home screen</b> / <b>Install app</b> for quicker access. The Instagram inspection itself still runs through the bookmark on the authorized Instagram page.</p>
+      <button id="installPwa" class="btn hidden">Install App</button>
+    </section>
+
+    <footer class="footer">Version <span id="version">2.0.0</span> • Static GitHub Pages package • Read README.md and USER_GUIDE.md for deployment and troubleshooting.</footer>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
